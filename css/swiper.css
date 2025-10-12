@@ -1,0 +1,105 @@
+@charset "UTF-8";
+/* CSS Document */
+  [class*=swiper]:focus {
+    outline: none;
+  }
+  .slide-media{
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-media img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+	.swiper-fade .swiper-slide{
+    -webkit-transition-property: opacity, -webkit-transform !important;
+    transition-property: opacity, -webkit-transform !important;
+    transition-property: opacity, transform !important;
+    transition-property: opacity, transform, -webkit-transform !important;
+    pointer-events: none;
+  }
+	.swiper-fade .swiper-slide-active{
+    pointer-events: auto;
+  }
+/**/
+	.slide-media{
+	 width: 100%;/*auto/100%*/
+	 height: 100vh;
+	 max-height: 1080px;
+	 aspect-ratio: 13 / 8;/**/
+	will-change: transform;/**/
+  }
+	.slide-media img{
+    -webkit-transition: 7s 1s ease-out;
+    transition: 7s 1s ease-out;
+		-webkit-transform: scale(1.07);/*scaledown*//**/
+            transform: scale(1.07);/*scaledown*//**/
+  }
+	.swiper-slide[class*=-active] .slide-media img{
+    -webkit-transition-delay: 0s;
+            transition-delay: 0s;
+    -webkit-transform: scale(1);/*1.05*/
+            transform: scale(1);/*1.05*/
+  }
+/*swiper-pagination*/
+.swiper-pagination{
+	text-align: center;
+	font-size: 1.4rem;
+	
+}
+
+.slide-slash {
+	width: 1.5rem;
+	 	height: 1px;
+    background: #000;
+    transform: rotate(-45deg);
+    display: inline-block;
+		margin: 10px 0;
+}
+
+@media screen and (max-width: 767px) {
+.slide-slash {
+		margin: 4px 0px;
+}
+}
+/**/
+/*
+  @-webkit-keyframes mv01-fadeIn {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+      opacity: 0;
+      -webkit-filter: blur(300px);
+              filter: blur(300px);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+      -webkit-filter: blur(0);
+              filter: blur(0);
+    }
+  }
+
+  @keyframes mv01-fadeIn {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+      opacity: 0;
+      -webkit-filter: blur(300px);
+              filter: blur(300px);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+      -webkit-filter: blur(0);
+              filter: blur(0);
+    }
+  }
+*/
