@@ -9,7 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&amp;family=Zen+Kaku+Gothic+Antique:wght@400;500&amp;display=swap"
     rel="stylesheet">
-  <title>Mokkai | 職人さんが作る家</title>
+  <title>MOKKAI | 職人さんが作る家</title>
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/styles.css">
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/swiper.min.css">
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/swiper.css">
@@ -41,5 +41,10 @@
       <li><a href="#" data-page="products">Works</a></li>
       <li><a href="#" data-page="news">News</a></li>
       <li><a href="#" data-page="contact">Contact</a></li>
+      <li>
+        <a href="https://www.instagram.com/mokkai_makabe/" target="_blank" rel="noopener noreferrer">
+          <img src="<?php echo get_template_directory_uri(); ?>/images/logo/Instagram-icon.svg" alt="Instagram" class="instagram-icon">
+        </a>
+      </li>
     </ul>
   </div>

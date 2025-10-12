@@ -105,6 +105,15 @@ nav {
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+@media screen and (max-width: 585px) {
+  .menu-overlay {
+    display: block;
+    overflow: scroll;
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+}
+
 .menu-overlay.active {
   opacity: 1;
   visibility: visible;
@@ -147,6 +156,10 @@ nav {
   transition-delay: 0.5s;
 }
 
+.menu-overlay.active .menu-links li:nth-child(6) {
+  transition-delay: 0.6s;
+}
+
 .menu-links a {
   color: #333;
   text-decoration: none;
@@ -160,6 +173,10 @@ nav {
 .menu-links a:hover {
   color: #8b7355;
   transform: scale(1.1);
+}
+
+.menu-links a img.instagram-icon{
+  width:50px;
 }
 
 /* メニューリンクのアクティブ状態 */
@@ -270,6 +287,12 @@ nav {
   padding: 200px 20px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 585px) {
+  .content-section {
+    padding: 150px 20px;
+  }
 }
 
 .section-title {
@@ -595,6 +618,12 @@ nav {
 .p-single{
   margin-top: 100px;
   padding: 0 20px;
+}
+
+@media screen and (max-width: 585px) {
+  .p-single{
+    margin-top: 0;
+  }
 }
 
 .p-single .content img{
