@@ -104,7 +104,13 @@ nav {
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@media screen and (max-width: 585px) {
+@media screen and (min-width: 768px) {
+  .hamburger,.menu-overlay {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
   .menu-overlay {
     display: block;
     overflow: scroll;
@@ -180,7 +186,7 @@ nav {
 
 /* メニューリンクのアクティブ状態 */
 .menu-links a.active {
-  border-bottom: 2px solid #8b7355; 
+  border-bottom: 1px solid #8b7355; 
   color: #8b7355; 
   cursor: default; 
 }
@@ -189,6 +195,21 @@ nav {
 .menu-links a.active:hover {
   opacity: 1;
   transform: none;
+}
+
+@media screen and (min-width: 768px) {
+  .menu-links {
+    display: flex;
+    gap: 30px;
+  }
+  .menu-links li {
+    margin: auto;
+    transform: unset;
+    opacity: 1;
+  }
+  .menu-links li a{
+    font-size: 2rem;
+  }
 }
 
 /* Main Container */
@@ -329,7 +350,7 @@ nav {
 /* Products Grid */
 
 .works-top{
-  max-width: 710px;
+  max-width: 1200px;
   margin: 120px auto 0;
 }
 .works-top img{
