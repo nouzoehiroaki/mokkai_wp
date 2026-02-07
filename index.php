@@ -67,7 +67,8 @@
     </section>
 
     <!-- Products Section -->
-    <section class="page-section" id="products">
+    <!-- <section class="page-section" id="products"> -->
+      <section class="page-section" id="products">
       <div class="works-top">
         <div class="swiper">
           <div class="swiper-wrapper">
