@@ -152,6 +152,20 @@ add_theme_support( 'post-thumbnails' );
 // 記事全体の自動整形の無効化
 remove_filter( 'the_content', 'wpautop' );
 
+// Contact Form7のお問い合せフォーム項目にひらがなが無ければ送信不可
+add_filter('wpcf7_validate_textarea', 'wpcf7_validation_textarea_hiragana', 10, 2);
+add_filter('wpcf7_validate_textarea*', 'wpcf7_validation_textarea_hiragana', 10, 2);
+function wpcf7_validation_textarea_hiragana($result, $tag)
+{
+  $name = $tag['name'];
+  $value = (isset($_POST[$name])) ? (string) $_POST[$name] : '';
+  if ($value !== '' && !preg_match('/[ぁ-ん]/u', $value)) {
+    $result['valid'] = false;
+    $result['reason'] = array($name => 'エラー：こちらの内容は送信できません。');
+  }
+  return $result;
+}
+
 
 /*-------------------------------------------*/
 /*  <head>タグ内に自分の追加したいタグを追加する
