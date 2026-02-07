@@ -8,7 +8,7 @@ hamburger.addEventListener('click', () => {
 });
 
 // Page transition system
-let currentPage = 'home';
+let currentPage = 'about';
 const pages = document.querySelectorAll('.page-section');
 const menuLinks = document.querySelectorAll('[data-page]');
 
@@ -70,7 +70,7 @@ menuLinks.forEach(link => {
 // Handle direct URL access and browser back/forward buttons
 function handleHashChange() {
   const hash = window.location.hash.slice(1); // Remove '#' from hash
-  const validPages = ['home', 'about', 'products', 'news', 'contact'];
+  const validPages = ['about', 'products', 'news', 'contact'];
   
   if (hash && validPages.includes(hash)) {
     // Directly set page without animation on initial load
@@ -89,8 +89,8 @@ function handleHashChange() {
     }
   } else if (!hash) {
     // No hash means home page
-    if (currentPage !== 'home') {
-      showPage('home');
+    if (currentPage !== 'about') {
+      showPage('about');
     }
   }
 }

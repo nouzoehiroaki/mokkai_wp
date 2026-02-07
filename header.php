@@ -36,7 +36,7 @@
   <!-- Menu Overlay -->
   <div class="menu-overlay" id="menuOverlay">
     <ul class="menu-links">
-      <li><a href="#" data-page="home">Home</a></li>
+      <!-- <li><a href="#" data-page="home">Home</a></li> -->
       <li><a href="#" data-page="about">About</a></li>
       <li><a href="#" data-page="products">Works</a></li>
       <li><a href="#" data-page="news">News</a></li>

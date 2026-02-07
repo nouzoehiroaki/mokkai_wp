@@ -12,7 +12,7 @@
   <!-- Main Container -->
   <div class="main-container main-site">
     <!-- Home Section -->
-    <section class="page-section home-section active" id="home">
+    <!-- <section class="page-section home-section active" id="home">
       <div class="fv-mask"></div>
       <div class="hero-content">
         <h1>
@@ -21,10 +21,10 @@
         <p>上質な手作りの家で、あなたの空間を豊かに</p>
         <a href="#" class="cta-button" data-page="products">施工事例を見る</a>
       </div>
-    </section>
+    </section> -->
 
     <!-- About Section -->
-    <section class="page-section" id="about">
+    <section class="page-section active" id="about">
       <div class="content-section">
         <h2 class="section-title">Mokkaiについて</h2>
         <div class="about-content">
