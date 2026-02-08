@@ -5,12 +5,13 @@
       <div class="loading-logo">
         <img src="<?php echo get_template_directory_uri(); ?>/images/logo/mokkai-logo.svg" alt="Mokkai" class="logo-svg">
       </div>
-      <div class="loading-text">職人さんが作る家</div>
+      <div class="loading-text">職人さんが作る家と家具</div>
     </div>
   </div>
 
   <!-- Main Container -->
   <div class="main-container main-site">
+
     <!-- Home Section -->
     <!-- <section class="page-section home-section active" id="home">
       <div class="fv-mask"></div>
@@ -23,52 +24,8 @@
       </div>
     </section> -->
 
-    <!-- About Section -->
-    <section class="page-section active" id="about">
-      <div class="content-section">
-        <h2 class="section-title">Mokkaiについて</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <p>Mokkaiは、シンプルで機能的、そして美しいデザインの手作りの家を提供しています。職人の技術と現代的なデザインが融合した、長く愛用していただける家を心を込めて製作しています。</p>
-            <p>素材選びから仕上げまで、すべての工程において品質を追求し、お客様の暮らしに寄り添う家をお届けします。</p>
-          </div>
-          <div class="about-image">
-            <div class="swiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about01.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about02.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about03.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about04.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about05.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about06.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about07.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                  <img src="<?php echo get_template_directory_uri(); ?>/images/about08.jpg" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Products Section -->
-    <!-- <section class="page-section" id="products"> -->
-      <section class="page-section" id="products">
+    <section class="page-section active" id="products">
       <div class="works-top">
         <div class="swiper">
           <div class="swiper-wrapper">
@@ -78,9 +35,7 @@
             <div class="swiper-slide">
               <img src="<?php echo get_template_directory_uri(); ?>/images/works02.jpg" alt="">
             </div>
-            <div class="swiper-slide">
-              <img src="<?php echo get_template_directory_uri(); ?>/images/works03.jpg" alt="">
-            </div>
+            
           </div>
         </div>
       </div>
@@ -92,7 +47,7 @@
             $query = new WP_Query(
                 array(
                     'paged' => $paged,
-                    'posts_per_page' => 6,
+                    'posts_per_page' => 4,
                     'post_type' => 'works',
                     'tax_query' => array(
                 		// array(
@@ -126,6 +81,22 @@
           <?php endif; wp_reset_postdata(); ?>
         </div>
         <a href="<?php echo home_url('works'); ?>" class="seemore">もっと見る</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="page-section" id="about">
+      <div class="content-section">
+        <h2 class="section-title">木塊について</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>株式会社木塊は、シンプルで機能的、そして美しいデザインの手作りの家と家具を提供しています。職人の技術と現代的なデザインが融合した、長く愛用していただける家を心を込めて製作しています。</p>
+            <p>素材選びから仕上げまで、すべての工程において品質を追求し、お客様の暮らしに寄り添う家をお届けします。</p>
+          </div>
+          <div class="about-image">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/about01.jpg" alt="">
+          </div>
+        </div>
       </div>
     </section>
 

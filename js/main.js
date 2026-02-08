@@ -8,7 +8,7 @@ hamburger.addEventListener('click', () => {
 });
 
 // Page transition system
-let currentPage = 'about';
+let currentPage = 'products';
 const pages = document.querySelectorAll('.page-section');
 const menuLinks = document.querySelectorAll('[data-page]');
 
@@ -89,8 +89,8 @@ function handleHashChange() {
     }
   } else if (!hash) {
     // No hash means home page
-    if (currentPage !== 'about') {
-      showPage('about');
+    if (currentPage !== 'products') {
+      showPage('products');
     }
   }
 }

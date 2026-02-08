@@ -126,25 +126,25 @@ function add_custom_post_works() {
 add_action('init', 'add_custom_post_works');
 
 //施工事例カテゴリ
-// function add_taxonomy_works() {
-//   register_taxonomy(
-//   'category-works',
-//   'works',
-//   array(
-//     'label' => '施工事例カテゴリ',
-//     'singular_label' => '施工事例カテゴリ',
-//     'labels' => array(
-//       'all_items' => '施工事例カテゴリ一覧',
-//       'add_new_item' => '施工事例カテゴリを追加'
-//     ),
-//     'public' => true,
-//     'show_ui' => true,
-//     'show_in_nav_menus' => true,
-//     'hierarchical' => true
-//     )
-//   );
-// }
-// add_action( 'init', 'add_taxonomy_works' );
+function add_taxonomy_works() {
+  register_taxonomy(
+  'category-works',
+  'works',
+  array(
+    'label' => '施工事例カテゴリ',
+    'singular_label' => '施工事例カテゴリ',
+    'labels' => array(
+      'all_items' => '施工事例カテゴリ一覧',
+      'add_new_item' => '施工事例カテゴリを追加'
+    ),
+    'public' => true,
+    'show_ui' => true,
+    'show_in_nav_menus' => true,
+    'hierarchical' => true
+    )
+  );
+}
+add_action( 'init', 'add_taxonomy_works' );
 
 /*【表示カスタマイズ】アイキャッチ画像の有効化 */
 add_theme_support( 'post-thumbnails' );

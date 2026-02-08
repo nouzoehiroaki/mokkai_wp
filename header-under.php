@@ -28,8 +28,8 @@
       <div class="header-link-pc">
        <ul class="menu-links">
           <!-- <li><a href="<?php echo home_url('/'); ?>">Home</a></li> -->
-          <li><a href="<?php echo home_url('/'); ?>#about">About</a></li>
           <li><a href="<?php echo home_url('/'); ?>#products">Works</a></li>
+          <li><a href="<?php echo home_url('/'); ?>#about">About</a></li>
           <li><a href="<?php echo home_url('/'); ?>#news">News</a></li>
           <li><a href="<?php echo home_url('/'); ?>#contact">Contact</a></li>
           <li>
