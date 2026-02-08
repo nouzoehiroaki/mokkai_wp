@@ -428,6 +428,15 @@ nav {
   margin-bottom: 20px;
 }
 
+@media screen and (max-width: 767px) {
+  .news-title {
+    font-size: 1rem;
+  }
+  .news-excerpt {
+    font-size: .8rem;
+  }
+}
+
 .seemore {
   display: block;
   padding: 15px 40px;
@@ -631,6 +640,15 @@ nav {
 
 .p-single h1.p-single__title{
   margin-bottom: 30px;
+}
+
+@media screen and (max-width: 767px) {
+   .p-single h1.p-single__title{
+    font-size: 1.5rem;
+  } 
+  .p-single .content p{
+   font-size: .8rem;
+  }
 }
 
 .p-single .p-single__category span{
