@@ -54,8 +54,9 @@
             ?>
             
         <?php endif; ?>
-
-        <?php echo wpautop( get_the_content() ); ?>
+        <div class="works-description">
+          <?php echo wpautop( get_the_content() ); ?>
+        </div>
       </div>
     </div>
   </div>

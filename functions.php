@@ -248,6 +248,16 @@ function wpcf7_validation_textarea_hiragana($result, $tag) {
   return $result;
 }
 
+// 施工事例用の管理画面スクリプト読み込み
+function works_gallery_admin_scripts($hook) {
+    global $post_type;
+    if (($hook === 'post.php' || $hook === 'post-new.php') && $post_type === 'works') {
+        wp_enqueue_media();
+        wp_enqueue_script('jquery-ui-sortable');
+    }
+}
+add_action('admin_enqueue_scripts', 'works_gallery_admin_scripts');
+
 // 施工事例用のメタボックス追加
 function works_gallery_meta_box() {
     add_meta_box(
@@ -267,12 +277,40 @@ function works_gallery_meta_box_callback($post) {
     $images = get_post_meta($post->ID, '_works_gallery_images', true);
     if (!is_array($images)) $images = array();
     ?>
+    <style>
+        #works-gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .works-gallery-item {
+            cursor: grab;
+            position: relative;
+            display: inline-block;
+        }
+        .works-gallery-item:active {
+            cursor: grabbing;
+        }
+        .works-gallery-item.ui-sortable-helper {
+            opacity: 0.8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transform: scale(1.05);
+        }
+        .sortable-placeholder {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #0073aa;
+            background: #f0f6fc;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
     <div id="works-gallery-container">
         <?php foreach ($images as $index => $image_id) :
             $image_url = wp_get_attachment_image_url($image_id, 'thumbnail');
             if (!$image_url) continue;
         ?>
-            <div class="works-gallery-item" style="display:inline-block; margin:5px; position:relative;">
+            <div class="works-gallery-item">
                 <img src="<?php echo esc_url($image_url); ?>" style="width:150px; height:150px; object-fit:cover; display:block;">
                 <input type="hidden" name="works_gallery_images[]" value="<?php echo esc_attr($image_id); ?>">
                 <button type="button" class="works-gallery-remove" style="position:absolute; top:0; right:0; background:red; color:#fff; border:none; cursor:pointer; padding:2px 6px;">×</button>
@@ -282,10 +320,10 @@ function works_gallery_meta_box_callback($post) {
     <p>
         <button type="button" id="works-gallery-add" class="button">画像を追加</button>
     </p>
+    <p class="description">※ 画像をドラッグ&ドロップで並び替えできます</p>
 
     <script>
     jQuery(document).ready(function($) {
-        // 画像追加
         $('#works-gallery-add').on('click', function(e) {
             e.preventDefault();
             var frame = wp.media({
@@ -297,8 +335,9 @@ function works_gallery_meta_box_callback($post) {
             frame.on('select', function() {
                 var attachments = frame.state().get('selection').toJSON();
                 $.each(attachments, function(i, attachment) {
-                    var html = '<div class="works-gallery-item" style="display:inline-block; margin:5px; position:relative;">';
-                    html += '<img src="' + attachment.sizes.thumbnail.url + '" style="width:150px; height:150px; object-fit:cover; display:block;">';
+                    var thumbUrl = attachment.sizes.thumbnail ? attachment.sizes.thumbnail.url : attachment.url;
+                    var html = '<div class="works-gallery-item">';
+                    html += '<img src="' + thumbUrl + '" style="width:150px; height:150px; object-fit:cover; display:block;">';
                     html += '<input type="hidden" name="works_gallery_images[]" value="' + attachment.id + '">';
                     html += '<button type="button" class="works-gallery-remove" style="position:absolute; top:0; right:0; background:red; color:#fff; border:none; cursor:pointer; padding:2px 6px;">×</button>';
                     html += '</div>';
@@ -308,22 +347,21 @@ function works_gallery_meta_box_callback($post) {
             frame.open();
         });
 
-        // 画像削除
         $(document).on('click', '.works-gallery-remove', function() {
             $(this).closest('.works-gallery-item').remove();
         });
 
-        // ドラッグ&ドロップで並び替え
         $('#works-gallery-container').sortable({
             items: '.works-gallery-item',
-            cursor: 'move',
-            placeholder: 'sortable-placeholder'
+            cursor: 'grabbing',
+            placeholder: 'sortable-placeholder',
+            tolerance: 'pointer',
+            revert: 200
         });
     });
     </script>
     <?php
 }
-
 // 保存処理
 function works_gallery_save($post_id) {
     if (!isset($_POST['works_gallery_nonce']) || !wp_verify_nonce($_POST['works_gallery_nonce'], 'works_gallery_nonce_action')) return;
