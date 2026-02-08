@@ -308,6 +308,9 @@ nav {
   max-width: 1200px;
   margin: 0 auto;
 }
+.content-section.archive-works-section{
+  padding: 200px 0px 200px;
+}
 
 @media screen and (max-width: 585px) {
   .content-section {
@@ -341,8 +344,6 @@ nav {
 }
 
 .about-image {
-  /* height: 400px;
-  background: linear-gradient(45deg, #f0f0f0, #e0e0e0); */
   border-radius: 8px;
   max-width: 400px;
 }
@@ -360,12 +361,12 @@ nav {
 }
 
 #products .content-section {
-  padding: 100px 20px 200px;
+  padding: 100px 0px 200px;
 }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   gap: 40px;
 }
 
@@ -377,6 +378,11 @@ nav {
   transition: transform 0.3s ease;
   max-width: 360px;
   margin: auto;
+}
+
+.product-image img{
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .product-card a{
@@ -392,7 +398,7 @@ nav {
 }
 
 .product-info h3 {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 400;
   margin-bottom: 10px;
   color: #2c3e50;
@@ -401,6 +407,7 @@ nav {
 .product-info p {
   color: #666;
   margin-bottom: 15px;
+  font-size: .8rem;
 }
 
 /* News Grid */
@@ -647,7 +654,7 @@ nav {
 }
 
 .p-single .content img{
-  max-width: 500px;
+  max-width: 800px;
   display: block;
   margin-bottom: 30px;
 }
