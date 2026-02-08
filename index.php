@@ -73,7 +73,12 @@
               </div>
               <div class="product-info">
                 <h3><?php the_title(); ?></h3>
-                <p><?php the_excerpt(); ?></p>
+                <p>
+                  <?php
+                  $tax_name = get_taxonomy( 'category-works' ) ;
+                  echo $tax_name -> label;
+                  ?>
+                </p>
               </div>
             </a>
           </div>
