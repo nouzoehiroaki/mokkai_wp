@@ -70,18 +70,101 @@ function post_has_archive( $args, $post_type ) {
 }
 add_filter( 'register_post_type_args', 'post_has_archive', 10, 2 );
 
-// function my_script(){
-//   if (is_front_page()) {
-//     wp_enqueue_script( 'uikit-js', get_template_directory_uri() . '/js/uikit.min.js', '1.0.0', true );
-//   }
-//   wp_enqueue_script( 'main-js', get_template_directory_uri() . '/js/js.js', '1.0.0', true );
-// }
-// add_action('wp_enqueue_scripts', 'my_script');
 
-// function enqueue_name(){
-//   wp_enqueue_style('style-css', get_template_directory_uri() . '/css/styles.css', array(), '1.0.0');
-// }
-// add_action('wp_enqueue_scripts','enqueue_name');
+// css読み込み
+function theme_enqueue_styles() {
+    // 共通CSS
+    wp_enqueue_style(
+        'theme-style',
+        get_template_directory_uri() . '/css/styles.css',
+        array(),
+        filemtime(get_template_directory() . '/css/styles.css')
+    );
+
+    // Google Fonts
+    wp_enqueue_style(
+        'google-fonts',
+        'https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Kaku+Gothic+Antique:wght@400;500&display=swap',
+        array(),
+        null
+    );
+
+    // Swiper（TOPページのみ）
+    if (is_front_page()) {
+        wp_enqueue_style(
+            'swiper-min',
+            get_template_directory_uri() . '/css/swiper.min.css',
+            array(),
+            null
+        );
+        wp_enqueue_style(
+            'swiper-custom',
+            get_template_directory_uri() . '/css/swiper.css',
+            array('swiper-min'),
+            filemtime(get_template_directory() . '/css/swiper.css')
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
+
+function theme_preconnect_google_fonts() {
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+}
+add_action('wp_head', 'theme_preconnect_google_fonts', 1);
+
+// js読み込み
+function theme_enqueue_scripts() {
+    // 共通JS
+    wp_enqueue_script(
+        'theme-main',
+        get_template_directory_uri() . '/js/main.js',
+        array(),
+        filemtime(get_template_directory() . '/js/main.js'),
+        true
+    );
+
+    // Swiper（TOPページのみ）
+    if (is_front_page()) {
+        wp_enqueue_script(
+            'swiper-bundle',
+            get_template_directory_uri() . '/js/swiper-bundle.min.js',
+            array(),
+            null,
+            true
+        );
+        wp_enqueue_script(
+            'swiper-custom',
+            get_template_directory_uri() . '/js/swiper.js',
+            array('swiper-bundle'),
+            filemtime(get_template_directory() . '/js/swiper.js'),
+            true
+        );
+    }
+
+    // Works（施工事例詳細ページのみ）
+    if (is_singular('works')) {
+        $images = get_post_meta(get_the_ID(), '_works_gallery_images', true);
+        if (!empty($images) && is_array($images)) {
+            $full_urls = array();
+            foreach ($images as $image_id) {
+                $url = wp_get_attachment_image_url($image_id, 'full');
+                if ($url) $full_urls[] = $url;
+            }
+
+            wp_enqueue_script(
+                'works-gallery',
+                get_template_directory_uri() . '/js/works.js',
+                array(),
+                filemtime(get_template_directory() . '/js/works.js'),
+                true
+            );
+            wp_localize_script('works-gallery', 'worksGalleryData', array(
+                'images' => $full_urls,
+            ));
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
 
 // wp_pagenavi
 function adjust_category_paged( $query = []) {
@@ -155,8 +238,7 @@ remove_filter( 'the_content', 'wpautop' );
 // Contact Form7のお問い合せフォーム項目にひらがなが無ければ送信不可
 add_filter('wpcf7_validate_textarea', 'wpcf7_validation_textarea_hiragana', 10, 2);
 add_filter('wpcf7_validate_textarea*', 'wpcf7_validation_textarea_hiragana', 10, 2);
-function wpcf7_validation_textarea_hiragana($result, $tag)
-{
+function wpcf7_validation_textarea_hiragana($result, $tag) {
   $name = $tag['name'];
   $value = (isset($_POST[$name])) ? (string) $_POST[$name] : '';
   if ($value !== '' && !preg_match('/[ぁ-ん]/u', $value)) {
