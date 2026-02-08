@@ -11,19 +11,6 @@
 
   <!-- Main Container -->
   <div class="main-container main-site">
-
-    <!-- Home Section -->
-    <!-- <section class="page-section home-section active" id="home">
-      <div class="fv-mask"></div>
-      <div class="hero-content">
-        <h1>
-          <img src="<?php echo get_template_directory_uri(); ?>/images/logo/mokkai-logo07.svg" alt="">
-        </h1>
-        <p>上質な手作りの家で、あなたの空間を豊かに</p>
-        <a href="#" class="cta-button" data-page="products">施工事例を見る</a>
-      </div>
-    </section> -->
-
     <!-- Products Section -->
     <section class="page-section active" id="products">
       <div class="works-top">
@@ -177,6 +164,5 @@
       </div>
     </section>
   </div>
-
   <?php get_footer(); ?>
   
