@@ -7,7 +7,7 @@
       $query = new WP_Query(
         array(
           'paged' => $paged,
-          'posts_per_page' => 9,
+          'posts_per_page' => 12,
           'post_type' => 'works',
           // 'tax_query' => array(
           //   array(
