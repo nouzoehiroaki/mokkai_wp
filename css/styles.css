@@ -321,7 +321,7 @@ nav {
 }
 
 @media screen and (max-width: 1199px) {
-  #products .content-section {
+  #products .content-section,.content-section.archive-works-section {
     padding: 100px 20px 200px;
   }
 }
@@ -329,7 +329,7 @@ nav {
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 40px;
+  gap: 30px;
 }
 
 .product-card {
