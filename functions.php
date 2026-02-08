@@ -70,18 +70,101 @@ function post_has_archive( $args, $post_type ) {
 }
 add_filter( 'register_post_type_args', 'post_has_archive', 10, 2 );
 
-// function my_script(){
-//   if (is_front_page()) {
-//     wp_enqueue_script( 'uikit-js', get_template_directory_uri() . '/js/uikit.min.js', '1.0.0', true );
-//   }
-//   wp_enqueue_script( 'main-js', get_template_directory_uri() . '/js/js.js', '1.0.0', true );
-// }
-// add_action('wp_enqueue_scripts', 'my_script');
 
-// function enqueue_name(){
-//   wp_enqueue_style('style-css', get_template_directory_uri() . '/css/styles.css', array(), '1.0.0');
-// }
-// add_action('wp_enqueue_scripts','enqueue_name');
+// css読み込み
+function theme_enqueue_styles() {
+    // 共通CSS
+    wp_enqueue_style(
+        'theme-style',
+        get_template_directory_uri() . '/css/styles.css',
+        array(),
+        filemtime(get_template_directory() . '/css/styles.css')
+    );
+
+    // Google Fonts
+    wp_enqueue_style(
+        'google-fonts',
+        'https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Kaku+Gothic+Antique:wght@400;500&display=swap',
+        array(),
+        null
+    );
+
+    // Swiper（TOPページのみ）
+    if (is_front_page()) {
+        wp_enqueue_style(
+            'swiper-min',
+            get_template_directory_uri() . '/css/swiper.min.css',
+            array(),
+            null
+        );
+        wp_enqueue_style(
+            'swiper-custom',
+            get_template_directory_uri() . '/css/swiper.css',
+            array('swiper-min'),
+            filemtime(get_template_directory() . '/css/swiper.css')
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
+
+function theme_preconnect_google_fonts() {
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+}
+add_action('wp_head', 'theme_preconnect_google_fonts', 1);
+
+// js読み込み
+function theme_enqueue_scripts() {
+    // 共通JS
+    wp_enqueue_script(
+        'theme-main',
+        get_template_directory_uri() . '/js/main.js',
+        array(),
+        filemtime(get_template_directory() . '/js/main.js'),
+        true
+    );
+
+    // Swiper（TOPページのみ）
+    if (is_front_page()) {
+        wp_enqueue_script(
+            'swiper-bundle',
+            get_template_directory_uri() . '/js/swiper-bundle.min.js',
+            array(),
+            null,
+            true
+        );
+        wp_enqueue_script(
+            'swiper-custom',
+            get_template_directory_uri() . '/js/swiper.js',
+            array('swiper-bundle'),
+            filemtime(get_template_directory() . '/js/swiper.js'),
+            true
+        );
+    }
+
+    // Works（施工事例詳細ページのみ）
+    if (is_singular('works')) {
+        $images = get_post_meta(get_the_ID(), '_works_gallery_images', true);
+        if (!empty($images) && is_array($images)) {
+            $full_urls = array();
+            foreach ($images as $image_id) {
+                $url = wp_get_attachment_image_url($image_id, 'full');
+                if ($url) $full_urls[] = $url;
+            }
+
+            wp_enqueue_script(
+                'works-gallery',
+                get_template_directory_uri() . '/js/works.js',
+                array(),
+                filemtime(get_template_directory() . '/js/works.js'),
+                true
+            );
+            wp_localize_script('works-gallery', 'worksGalleryData', array(
+                'images' => $full_urls,
+            ));
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
 
 // wp_pagenavi
 function adjust_category_paged( $query = []) {
@@ -155,8 +238,7 @@ remove_filter( 'the_content', 'wpautop' );
 // Contact Form7のお問い合せフォーム項目にひらがなが無ければ送信不可
 add_filter('wpcf7_validate_textarea', 'wpcf7_validation_textarea_hiragana', 10, 2);
 add_filter('wpcf7_validate_textarea*', 'wpcf7_validation_textarea_hiragana', 10, 2);
-function wpcf7_validation_textarea_hiragana($result, $tag)
-{
+function wpcf7_validation_textarea_hiragana($result, $tag) {
   $name = $tag['name'];
   $value = (isset($_POST[$name])) ? (string) $_POST[$name] : '';
   if ($value !== '' && !preg_match('/[ぁ-ん]/u', $value)) {
@@ -165,6 +247,98 @@ function wpcf7_validation_textarea_hiragana($result, $tag)
   }
   return $result;
 }
+
+// 施工事例用のメタボックス追加
+function works_gallery_meta_box() {
+    add_meta_box(
+        'works_gallery',
+        '施工事例 画像ギャラリー',
+        'works_gallery_meta_box_callback',
+        'works',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'works_gallery_meta_box');
+
+// メタボックスのHTML出力
+function works_gallery_meta_box_callback($post) {
+    wp_nonce_field('works_gallery_nonce_action', 'works_gallery_nonce');
+    $images = get_post_meta($post->ID, '_works_gallery_images', true);
+    if (!is_array($images)) $images = array();
+    ?>
+    <div id="works-gallery-container">
+        <?php foreach ($images as $index => $image_id) :
+            $image_url = wp_get_attachment_image_url($image_id, 'thumbnail');
+            if (!$image_url) continue;
+        ?>
+            <div class="works-gallery-item" style="display:inline-block; margin:5px; position:relative;">
+                <img src="<?php echo esc_url($image_url); ?>" style="width:150px; height:150px; object-fit:cover; display:block;">
+                <input type="hidden" name="works_gallery_images[]" value="<?php echo esc_attr($image_id); ?>">
+                <button type="button" class="works-gallery-remove" style="position:absolute; top:0; right:0; background:red; color:#fff; border:none; cursor:pointer; padding:2px 6px;">×</button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <p>
+        <button type="button" id="works-gallery-add" class="button">画像を追加</button>
+    </p>
+
+    <script>
+    jQuery(document).ready(function($) {
+        // 画像追加
+        $('#works-gallery-add').on('click', function(e) {
+            e.preventDefault();
+            var frame = wp.media({
+                title: '画像を選択',
+                multiple: true,
+                library: { type: 'image' },
+                button: { text: '画像を追加' }
+            });
+            frame.on('select', function() {
+                var attachments = frame.state().get('selection').toJSON();
+                $.each(attachments, function(i, attachment) {
+                    var html = '<div class="works-gallery-item" style="display:inline-block; margin:5px; position:relative;">';
+                    html += '<img src="' + attachment.sizes.thumbnail.url + '" style="width:150px; height:150px; object-fit:cover; display:block;">';
+                    html += '<input type="hidden" name="works_gallery_images[]" value="' + attachment.id + '">';
+                    html += '<button type="button" class="works-gallery-remove" style="position:absolute; top:0; right:0; background:red; color:#fff; border:none; cursor:pointer; padding:2px 6px;">×</button>';
+                    html += '</div>';
+                    $('#works-gallery-container').append(html);
+                });
+            });
+            frame.open();
+        });
+
+        // 画像削除
+        $(document).on('click', '.works-gallery-remove', function() {
+            $(this).closest('.works-gallery-item').remove();
+        });
+
+        // ドラッグ&ドロップで並び替え
+        $('#works-gallery-container').sortable({
+            items: '.works-gallery-item',
+            cursor: 'move',
+            placeholder: 'sortable-placeholder'
+        });
+    });
+    </script>
+    <?php
+}
+
+// 保存処理
+function works_gallery_save($post_id) {
+    if (!isset($_POST['works_gallery_nonce']) || !wp_verify_nonce($_POST['works_gallery_nonce'], 'works_gallery_nonce_action')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    if (isset($_POST['works_gallery_images'])) {
+        $images = array_map('intval', $_POST['works_gallery_images']);
+        update_post_meta($post_id, '_works_gallery_images', $images);
+    } else {
+        delete_post_meta($post_id, '_works_gallery_images');
+    }
+}
+add_action('save_post_works', 'works_gallery_save');
+
 
 
 /*-------------------------------------------*/
