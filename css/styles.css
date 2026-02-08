@@ -117,6 +117,9 @@ nav {
     padding-top: 100px;
     padding-bottom: 50px;
   }
+  .header-link-pc{
+    display: none;
+  }
 }
 
 .menu-overlay.active {
@@ -244,70 +247,13 @@ nav {
   transform: translateX(-100%);
 }
 
-/* Home Section */
-.home-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url(../images/fv.jpg);
-  background-size: cover;
-  background-position: center;
-  color: #222;
-  position: relative;
-}
-
-.fv-mask{
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.7);
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero-content h1 {
-  margin: 0 auto 20px;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.5s forwards;
-  max-width: 200px;
-}
-
-.hero-content p {
-  font-size: 1.4rem;
-  font-weight: 300;
-  margin-bottom: 30px;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.7s forwards;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 15px 40px;
-  background: transparent;
-  color: #222;
-  text-decoration: none;
-  border: 2px solid #222;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 1px;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.9s forwards;
-}
-
-.cta-button:hover {
-  background: white;
-  color: #333;
-}
-
 /* Content Sections */
 .content-section {
   padding: 200px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .content-section.archive-works-section{
   padding: 200px 0px 200px;
 }
@@ -348,12 +294,22 @@ nav {
   max-width: 400px;
 }
 
+@media screen and (max-width: 767px) {
+  .about-image {
+    margin: auto;
+  }
+  .about-text p {
+    font-size: 1rem;
+  }
+}
+
 /* Products Grid */
 
 .works-top{
   max-width: 1200px;
   margin: 120px auto 0;
 }
+
 .works-top img{
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -362,6 +318,12 @@ nav {
 
 #products .content-section {
   padding: 100px 0px 200px;
+}
+
+@media screen and (max-width: 1199px) {
+  #products .content-section {
+    padding: 100px 20px 200px;
+  }
 }
 
 .products-grid {
@@ -644,7 +606,6 @@ nav {
 
 .p-single{
   margin-top: 100px;
-  padding: 0 20px;
 }
 
 @media screen and (max-width: 585px) {
@@ -663,7 +624,6 @@ nav {
   margin-bottom: 20px;
   line-height: 1.7;
 }
-
 
 .p-single .content h2{
   margin-bottom: 20px;
@@ -689,10 +649,12 @@ nav {
   margin-bottom: 10px;
   font-weight: bold;
 }
+
 .pagenavi{
   text-align: center;
   margin-top: 70px;
 }
+
 .wp-pagenavi a, .wp-pagenavi span {
   border: none!important;
   padding: 5px 10px!important;
@@ -702,16 +664,19 @@ nav {
   color:#000;
   margin: 5px !important;
 }
+
 .wp-pagenavi span.current {
   background:#8b7355;
   color: #fff;
 }
+
 a.previouspostslink, a.nextpostslink {
   background: 0;
   font-size: 0;
   position: relative;
   line-height: 1;
 }
+
 a.previouspostslink::before {
   content: '';
   width: 10px;
@@ -858,4 +823,20 @@ a.nextpostslink::after {
   .works-modal__next {
     right: 5px;
   }
+}
+
+footer{
+  opacity: 0;
+  text-align: end;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 20;
+  transition: opacity 0.5s ease;
+}
+
+footer.is-visible {
+  opacity: 1;
 }

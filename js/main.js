@@ -155,3 +155,42 @@ document.addEventListener('DOMContentLoaded', function() {
     return
   }
 });
+
+function initFooterVisibility() {
+  var footer = document.querySelector('footer');
+  if (!footer) return;
+
+  // TOPページ（page-sectionがある場合）
+  var sections = document.querySelectorAll('.page-section');
+  if (sections.length > 0) {
+    sections.forEach(function (section) {
+      section.addEventListener('scroll', function () {
+        if (!this.classList.contains('active')) return;
+        var scrollTop = this.scrollTop;
+        var scrollHeight = this.scrollHeight;
+        var clientHeight = this.clientHeight;
+
+        if (scrollTop + clientHeight >= scrollHeight - 10) {
+          footer.classList.add('is-visible');
+        } else {
+          footer.classList.remove('is-visible');
+        }
+      });
+    });
+  } else {
+    // 通常ページ
+    window.addEventListener('scroll', function () {
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      var windowHeight = window.innerHeight;
+      var docHeight = document.documentElement.scrollHeight;
+
+      if (scrollTop + windowHeight >= docHeight - 10) {
+        footer.classList.add('is-visible');
+      } else {
+        footer.classList.remove('is-visible');
+      }
+    });
+  }
+}
+
+initFooterVisibility();
