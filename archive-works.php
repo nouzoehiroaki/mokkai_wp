@@ -35,8 +35,12 @@
           <h3><?php the_title(); ?></h3>
           <p>
             <?php
-            $tax_name = get_taxonomy( 'category-works' ) ;
-            echo $tax_name -> label;
+            $terms = get_the_terms(get_the_ID(), 'category-works');
+            if ($terms && !is_wp_error($terms)):
+              foreach($terms as $term):
+                echo $term->name;
+              endforeach;
+            endif;
             ?>
           </p>
         </div>
