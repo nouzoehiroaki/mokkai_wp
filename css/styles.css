@@ -827,7 +827,7 @@ a.nextpostslink::after {
 
 footer{
   opacity: 0;
-  text-align: end;
+  text-align: left;
   padding: 20px;
   position: fixed;
   bottom: 0;
