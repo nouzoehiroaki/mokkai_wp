@@ -166,6 +166,98 @@ function wpcf7_validation_textarea_hiragana($result, $tag)
   return $result;
 }
 
+// 施工事例用のメタボックス追加
+function works_gallery_meta_box() {
+    add_meta_box(
+        'works_gallery',
+        '施工事例 画像ギャラリー',
+        'works_gallery_meta_box_callback',
+        'works',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'works_gallery_meta_box');
+
+// メタボックスのHTML出力
+function works_gallery_meta_box_callback($post) {
+    wp_nonce_field('works_gallery_nonce_action', 'works_gallery_nonce');
+    $images = get_post_meta($post->ID, '_works_gallery_images', true);
+    if (!is_array($images)) $images = array();
+    ?>
+    <div id="works-gallery-container">
+        <?php foreach ($images as $index => $image_id) :
+            $image_url = wp_get_attachment_image_url($image_id, 'thumbnail');
+            if (!$image_url) continue;
+        ?>
+            <div class="works-gallery-item" style="display:inline-block; margin:5px; position:relative;">
+                <img src="<?php echo esc_url($image_url); ?>" style="width:150px; height:150px; object-fit:cover; display:block;">
+                <input type="hidden" name="works_gallery_images[]" value="<?php echo esc_attr($image_id); ?>">
+                <button type="button" class="works-gallery-remove" style="position:absolute; top:0; right:0; background:red; color:#fff; border:none; cursor:pointer; padding:2px 6px;">×</button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <p>
+        <button type="button" id="works-gallery-add" class="button">画像を追加</button>
+    </p>
+
+    <script>
+    jQuery(document).ready(function($) {
+        // 画像追加
+        $('#works-gallery-add').on('click', function(e) {
+            e.preventDefault();
+            var frame = wp.media({
+                title: '画像を選択',
+                multiple: true,
+                library: { type: 'image' },
+                button: { text: '画像を追加' }
+            });
+            frame.on('select', function() {
+                var attachments = frame.state().get('selection').toJSON();
+                $.each(attachments, function(i, attachment) {
+                    var html = '<div class="works-gallery-item" style="display:inline-block; margin:5px; position:relative;">';
+                    html += '<img src="' + attachment.sizes.thumbnail.url + '" style="width:150px; height:150px; object-fit:cover; display:block;">';
+                    html += '<input type="hidden" name="works_gallery_images[]" value="' + attachment.id + '">';
+                    html += '<button type="button" class="works-gallery-remove" style="position:absolute; top:0; right:0; background:red; color:#fff; border:none; cursor:pointer; padding:2px 6px;">×</button>';
+                    html += '</div>';
+                    $('#works-gallery-container').append(html);
+                });
+            });
+            frame.open();
+        });
+
+        // 画像削除
+        $(document).on('click', '.works-gallery-remove', function() {
+            $(this).closest('.works-gallery-item').remove();
+        });
+
+        // ドラッグ&ドロップで並び替え
+        $('#works-gallery-container').sortable({
+            items: '.works-gallery-item',
+            cursor: 'move',
+            placeholder: 'sortable-placeholder'
+        });
+    });
+    </script>
+    <?php
+}
+
+// 保存処理
+function works_gallery_save($post_id) {
+    if (!isset($_POST['works_gallery_nonce']) || !wp_verify_nonce($_POST['works_gallery_nonce'], 'works_gallery_nonce_action')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    if (isset($_POST['works_gallery_images'])) {
+        $images = array_map('intval', $_POST['works_gallery_images']);
+        update_post_meta($post_id, '_works_gallery_images', $images);
+    } else {
+        delete_post_meta($post_id, '_works_gallery_images');
+    }
+}
+add_action('save_post_works', 'works_gallery_save');
+
+
 
 /*-------------------------------------------*/
 /*  <head>タグ内に自分の追加したいタグを追加する
