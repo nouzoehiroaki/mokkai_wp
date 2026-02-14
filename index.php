@@ -147,16 +147,27 @@
             </p>
 
             <p>
-              <strong>代表者名:</strong><br>
-              福榮　信彦
+              <strong>代表取締役:</strong><br>
+              福榮 信彦
             </p>
 
+            <p><strong>所在地:</strong><br>
+              〒120-0045<br>
+              東京都足立区千住桜木2-18-4
+            </p>
+            
             <p><strong>本社所在地:</strong><br>
               〒180-0003<br>
-              東京都武蔵野市吉祥寺南町3-18-5</p>
+              東京都武蔵野市吉祥寺南町3-18-5
+            </p>
 
-            <p><strong>電話:</strong> 03-XXXX-XXXX<br>
-              <strong>メール:</strong>fukuei@mokkai.com
+            <p><strong>電話:</strong><br>
+              090-3440-9451
+            </p>
+
+            <p>
+              <strong>メール:</strong><br>
+              info@mokkai-chunk.com
             </p>
           </div>
           <?php echo do_shortcode('[contact-form-7 id="5833619" title="ContactForm"]'); ?>
