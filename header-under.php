@@ -23,7 +23,7 @@
           <li><a href="<?php echo home_url('/'); ?>#news">News</a></li>
           <li><a href="<?php echo home_url('/'); ?>#contact">Contact</a></li>
           <li>
-            <a href="https://www.instagram.com/mokkai_makabe/" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/mokkai_chunk" target="_blank" rel="noopener noreferrer">
               <img src="<?php echo get_template_directory_uri(); ?>/images/logo/Instagram-icon.svg" alt="Instagram" class="instagram-icon">
             </a>
           </li>
@@ -45,7 +45,7 @@
       <li><a href="<?php echo home_url('/'); ?>#news">News</a></li>
       <li><a href="<?php echo home_url('/'); ?>#contact">Contact</a></li>
       <li>
-        <a href="https://www.instagram.com/mokkai_makabe/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/mokkai_chunk" target="_blank" rel="noopener noreferrer">
           <img src="<?php echo get_template_directory_uri(); ?>/images/logo/Instagram-icon.svg" alt="Instagram" class="instagram-icon">
         </a>
       </li>
