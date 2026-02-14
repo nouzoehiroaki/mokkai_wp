@@ -78,7 +78,7 @@ nav {
 }
 
 .hamburger.active span:nth-child(2) {
-  opacity: 0;
+  display: none;
 }
 
 .hamburger.active span:nth-child(3) {
