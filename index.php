@@ -90,7 +90,7 @@
             <p>素材選びから仕上げまで、すべての工程において品質を追求し、お客様の暮らしに寄り添う家をお届けします。</p>
           </div>
           <div class="about-image">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/about01.jpg" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/about_01.jpg" alt="">
           </div>
         </div>
       </div>
