@@ -377,6 +377,9 @@ function works_gallery_save($post_id) {
 }
 add_action('save_post_works', 'works_gallery_save');
 
+add_action( 'after_setup_theme', function() {
+	add_theme_support( 'title-tag' );
+} );
 
 
 /*-------------------------------------------*/
